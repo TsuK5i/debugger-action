@@ -1,12 +1,18 @@
-name: debugger-action
-on:
+name: Debug with RDP
+
+on: 
+  workflow_dispatch:  # 手动触发
   push:
-    branches:
-      - test
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  debug:
+    runs-on: windows-latest  # 改为 Windows
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Debug with tmate (RDP available)
+        uses: mxschmitt/action-tmate@v3
+        with:
+          # 可选：设置 RDP 密码（不设置则自动生成）
+          rdp-password: your-password-here
